@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Acessar Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #151820;
+      --accent: #f2c94c;
+      --accent2: #f7a325;
+      --text: #eef0f6;
+      --muted: #7a7e8e;
+      --glow: rgba(242, 201, 76, 0.35);
+    }
+
+    body {
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(242,201,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(242,201,76,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: gridDrift 18s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes gridDrift {
+      0%   { transform: translate(0,0); }
+      100% { transform: translate(48px, 48px); }
+    }
+
+    /* Radial glow blob */
+    body::after {
+      content: '';
+      position: fixed;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(242,201,76,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid rgba(242,201,76,0.15);
+      border-radius: 20px;
+      padding: 56px 52px 48px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 80px rgba(0,0,0,0.6), 0 0 40px var(--glow);
+      animation: cardIn 0.7s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .icon-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 16px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 24px var(--glow);
+      animation: iconPop 0.9s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+
+    @keyframes iconPop {
+      from { opacity: 0; transform: scale(0.6) rotate(-10deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    .icon-wrap svg {
+      width: 30px; height: 30px;
+      fill: #0d0f14;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 12px;
+      animation: fadeUp 0.7s ease 0.25s both;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin-bottom: 40px;
+      animation: fadeUp 0.7s ease 0.35s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      color: #0d0f14;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 4px 24px var(--glow);
+      animation: fadeUp 0.7s ease 0.45s both;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 10px 40px rgba(242,201,76,0.55);
+    }
+
+    .btn:hover::before { opacity: 1; }
+
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 4px 16px var(--glow);
+    }
+
+    .btn svg {
+      width: 18px; height: 18px;
+      fill: #0d0f14;
+      flex-shrink: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(242,201,76,0.1);
+      border: 1px solid rgba(242,201,76,0.2);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon-wrap">
+      <!-- Power BI-style bar chart icon -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="13" width="4" height="9" rx="1"/>
+        <rect x="9" y="8" width="4" height="14" rx="1"/>
+        <rect x="16" y="3" width="4" height="19" rx="1"/>
+      </svg>
+    </div>
+    <h1>DashBoard Historico</h1>
+    <p>Desenvovildo Por Vinicius Silva Martins Costa</p>
+    <a
+      href="https://app.powerbi.com/links/SEb7Svnm8E?ctid=71efa34d-a921-4300-9d81-cc6ec9be17a4&pbi_source=linkShare"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zM5 5h6V3H3v18h18v-8h-2v6H5V5z"/>
+      </svg>
+      Abrir no Power BI
+    </a>
+  </div>
+</body>
+</html>
